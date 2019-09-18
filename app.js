@@ -156,18 +156,33 @@ document.getElementById('search-books').addEventListener('keyup', e => {
 
   // Getting Book List
   const bookList = document.getElementById('book-list');
+
   // Getting all table rows inside that bookList
   const trs = bookList.getElementsByTagName('tr');
+
+  // Made Array of all trs and then running some code on all table-rows
   Array.from(trs).forEach(tr => {
+
+    // Checking if any "td" inside "current tr" includes search input.
+    // If any "td" includes search input, isMatching is set to true or false otherwise.
     const isMatching = Array.from(tr.children).some(td =>
       td.textContent
         .toLowerCase()
         .replace(/ /g, '')
         .includes(searchInput)
     );
+
+    // If isMatching is true.
     if (isMatching) {
+
+      // Display styles remains unchanged for those table-row(s) whom "td" does includes search input.
       tr.style.display = 'table-row';
+
+      // Made array of all children elements of table-row.
+      // and then running some code on each children of table-rows.
       Array.from(tr.children).forEach(td => {
+
+        // if Children of table-row includes searchInput, then setting background color of that children to yellow.
         if (
           td.textContent
             .toLowerCase()
@@ -176,32 +191,18 @@ document.getElementById('search-books').addEventListener('keyup', e => {
           searchInput.length > 0
         ) {
           td.style.backgroundColor = 'yellow';
-        } else {
+        }
+        
+        // if Children of table-row doesn't includes searchInput, then setting background color back to it's initially 
+        else {
           td.style.backgroundColor = 'initial';
         }
       });
-    } else {
-      tr.style.display = 'none';
+    }
+    
+    // If isMatching is false.
+    else {
+      tr.style.display = 'none'; // Not displaying the table-row whom "td" doesn't includes search input.
     }
   });
-  // Get Books
-  // let allBooks = Store.getBooks();
-  // console.log(typeof allBooks[0].isbnNumber);
-
-  // if (searchInput && typeof searchInput === typeof 'string') {
-  //   let filteredBooks = allBooks.filter(({ title, author, isbnNumber }) => {
-  //     title = title.toLowerCase();
-  //     author = author.toLowerCase();
-
-  //     return (
-  //       title.includes(searchInput) ||
-  //       author.includes(searchInput) ||
-  //       isbnNumber.includes(isbnNumber)
-  //     );
-  //   });
-  //   console.log(filteredBooks);
-  // } else {
-  //   let filteredBooks = [{ title: 'nothing' }];
-  //   console.log(filteredBooks);
-  // }
 });
